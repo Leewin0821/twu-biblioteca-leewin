@@ -51,4 +51,10 @@ public class Book
     {
         this.isAvailableForReturn = isAvailableForReturn;
     }
+
+    @Override
+    public String toString()
+    {
+        return bookName + " | " + author + " | " + publishedYear;
+    }
 }

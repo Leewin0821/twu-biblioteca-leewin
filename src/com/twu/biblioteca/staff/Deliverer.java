@@ -14,11 +14,12 @@ public class Deliverer implements Staff
         this.shelf = shelf;
     }
 
-    public void doService()
+    public boolean doService()
     {
         for (Book book : shelf.getBookList()) {
             System.out.println(book.toString());
         }
         System.out.println("I'm deliverer");
+        return true;
     }
 }

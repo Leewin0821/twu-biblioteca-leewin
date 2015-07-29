@@ -1,23 +1,27 @@
 package com.twu.biblioteca;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.MockitoAnnotations.initMocks;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
-import org.junit.Ignore;
+import com.twu.biblioteca.staff.Deliverer;
+import com.twu.biblioteca.staff.Messenger;
+import com.twu.biblioteca.staff.Staff;
+import com.twu.biblioteca.staff.WorkDispatcher;
 import org.mockito.Mock;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.twu.biblioteca.staff.Deliverer;
-import com.twu.biblioteca.staff.Messenger;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
+import static com.twu.biblioteca.staff.WorkDispatcher.LIST_BOOK;
+import static com.twu.biblioteca.staff.WorkDispatcher.QUIT;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 public class LibrarianTest
 {
     private Librarian librarian;
+
+    private WorkDispatcher dispatcher;
 
     @Mock
     private Messenger messenger;
@@ -25,11 +29,15 @@ public class LibrarianTest
     @Mock
     private Deliverer deliverer;
 
+    @Mock
+    private Staff quiter;
+
     @BeforeMethod
     public void setUp()
     {
         initMocks(this);
-        librarian = new Librarian(messenger);
+        dispatcher = new WorkDispatcher(deliverer, quiter);
+        librarian = new Librarian(messenger, dispatcher);
     }
 
     @Test
@@ -37,7 +45,7 @@ public class LibrarianTest
     {
         //given
         String[] args = new String[1];
-        InputStream inputStream = new ByteArrayInputStream("2".getBytes());
+        InputStream inputStream = new ByteArrayInputStream(QUIT.getBytes());
         System.setIn(inputStream);
 
         //when
@@ -49,12 +57,11 @@ public class LibrarianTest
     }
 
     @Test
-    @Ignore
     public void should_list_books_when_user_input_list()
     {
         //given
         String[] args = new String[1];
-        InputStream inputStream = new ByteArrayInputStream("list".getBytes());
+        InputStream inputStream = new ByteArrayInputStream(LIST_BOOK.getBytes());
         System.setIn(inputStream);
 
         //when

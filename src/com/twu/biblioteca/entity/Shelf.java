@@ -9,7 +9,7 @@ import com.google.inject.Singleton;
 @Singleton
 public class Shelf
 {
-    private final List<Book> bookList;
+    private List<Book> bookList;
 
     public Shelf()
     {
@@ -29,10 +29,19 @@ public class Shelf
 
     public void borrowOutBook(String bookName)
     {
+        List<Book> filterBookList = Lists.newArrayList();
         for (Book book : bookList) {
             if (book.getBookName().equals(bookName) && book.isAvailableForBorrow()) {
-                book.setIsAvailableForBorrow(false);
+                filterBookList.add(book);
             }
+        }
+        if (filterBookList.size() == 0) {
+            System.out.println("That book is not available.");
+        } else {
+            Book filterBook = filterBookList.get(0);
+            filterBook.setIsAvailableForBorrow(false);
+            filterBook.setIsAvailableForReturn(true);
+            System.out.println("Thank you! Enjoy the book");
         }
     }
 }

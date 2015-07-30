@@ -1,7 +1,7 @@
 package com.twu.biblioteca.staff;
 
-import com.google.common.collect.FluentIterable;
 import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Inject;
 import com.twu.biblioteca.entity.Book;
@@ -23,10 +23,15 @@ public class Deliverer implements Staff
         {
             public boolean apply(Book book)
             {
-                System.out.println(book.toString());
-                return book.isAvailableForBorrow();
+                if (book.isAvailableForBorrow()) {
+                    System.out.println(book.toString());
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }).toList();
+
         return true;
     }
 }

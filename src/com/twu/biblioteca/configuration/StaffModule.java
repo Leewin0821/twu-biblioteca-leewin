@@ -8,6 +8,7 @@ import com.twu.biblioteca.staff.Deliverer;
 import com.twu.biblioteca.staff.EmptyStaff;
 import com.twu.biblioteca.staff.Messenger;
 import com.twu.biblioteca.staff.Quiter;
+import com.twu.biblioteca.staff.Returner;
 import com.twu.biblioteca.staff.Staff;
 
 public class StaffModule implements Module
@@ -19,5 +20,6 @@ public class StaffModule implements Module
         binder.bind(Staff.class).annotatedWith(Names.named("Quiter")).to(Quiter.class);
         binder.bind(Staff.class).annotatedWith(Names.named("EmptyStaff")).to(EmptyStaff.class);
         binder.bind(Staff.class).annotatedWith(Names.named("Borrower")).to(Borrower.class);
+        binder.bind(Staff.class).annotatedWith(Names.named("Returner")).to(Returner.class);
     }
 }

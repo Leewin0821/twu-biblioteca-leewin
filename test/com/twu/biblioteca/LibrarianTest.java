@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import static com.twu.biblioteca.staff.WorkDispatcher.*;
 import static com.twu.biblioteca.staff.WorkDispatcher.LIST_BOOK_COMMAND;
 import static com.twu.biblioteca.staff.WorkDispatcher.QUIT_COMMAND;
 import static org.mockito.Mockito.times;
@@ -20,8 +21,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class LibrarianTest
 {
     private Librarian librarian;
-
-    private WorkDispatcher dispatcher;
 
     @Mock
     private Messenger messenger;
@@ -38,11 +37,14 @@ public class LibrarianTest
     @Mock
     private Staff borrower;
 
+    @Mock
+    private Staff returner;
+
     @BeforeMethod
     public void setUp()
     {
         initMocks(this);
-        dispatcher = new WorkDispatcher(deliverer, quiter, emptyStaff, borrower);
+        WorkDispatcher dispatcher = new WorkDispatcher(deliverer, quiter, emptyStaff, borrower, returner);
         librarian = new Librarian(messenger, dispatcher);
     }
 
@@ -92,6 +94,38 @@ public class LibrarianTest
 
         //then
         verify(emptyStaff, times(1)).doService();
+        System.setIn(System.in);
+    }
+
+    @Test
+    public void shoud_borrow_book_when_input_checkout()
+    {
+        //given
+        String[] args = new String[1];
+        InputStream inputStream = new ByteArrayInputStream(BORROW_COMMAND.getBytes());
+        System.setIn(inputStream);
+
+        //when
+        librarian.work();
+
+        //then
+        verify(borrower, times(1)).doService();
+        System.setIn(System.in);
+    }
+
+    @Test
+    public void shoud_return_book_when_input_return()
+    {
+        //given
+        String[] args = new String[1];
+        InputStream inputStream = new ByteArrayInputStream(RETURN_COMMAND.getBytes());
+        System.setIn(inputStream);
+
+        //when
+        librarian.work();
+
+        //then
+        verify(returner, times(1)).doService();
         System.setIn(System.in);
     }
 }

@@ -41,7 +41,25 @@ public class Shelf
             Book filterBook = filterBookList.get(0);
             filterBook.setIsAvailableForBorrow(false);
             filterBook.setIsAvailableForReturn(true);
-            System.out.println("Thank you! Enjoy the book");
+            System.out.println("Thank you! Enjoy the book.");
+        }
+    }
+
+    public void returnBook(String bookName)
+    {
+        List<Book> filterBookList = Lists.newArrayList();
+        for (Book book : bookList) {
+            if (book.getBookName().equals(bookName) && book.isAvailableForReturn()) {
+                filterBookList.add(book);
+            }
+        }
+        if (filterBookList.size() == 0) {
+            System.out.println("That is not a valid book to return.");
+        } else {
+            Book filterBook = filterBookList.get(0);
+            filterBook.setIsAvailableForBorrow(true);
+            filterBook.setIsAvailableForReturn(false);
+            System.out.println("Thank you for returning the book.");
         }
     }
 }

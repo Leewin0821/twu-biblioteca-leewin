@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-import org.junit.Ignore;
 import org.mockito.Mock;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -27,7 +26,8 @@ public class WorkDispatcherTest
         Staff quiter = new Quiter();
         Staff emptyStaff = new EmptyStaff();
         Staff borrower = new Borrower(shelf);
-        workDispatcher = new WorkDispatcher(deliverer, quiter, emptyStaff, borrower);
+        Staff returner = new Returner(shelf);
+        workDispatcher = new WorkDispatcher(deliverer, quiter, emptyStaff, borrower, returner);
     }
 
     @Test
@@ -71,5 +71,16 @@ public class WorkDispatcherTest
 
         //then
         assertThat(result, instanceOf(Borrower.class));
+    }
+
+    @Test
+    public void should_return_returner_when_input_borrow()
+    {
+        //when
+        Staff result = workDispatcher.dispatchTask(RETURN_COMMAND);
+
+        //then
+        assertThat(result, instanceOf(Returner.class));
+
     }
 }

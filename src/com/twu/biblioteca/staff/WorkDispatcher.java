@@ -5,12 +5,11 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import com.twu.biblioteca.entity.Shelf;
 
 public class WorkDispatcher
 {
-    public static final String LIST_BOOK = "list.book";
-    public static final String QUIT = "quit";
+    public static final String LIST_BOOK_COMMAND = "list";
+    public static final String QUIT_COMMAND = "quit";
 
     private Staff deliverer;
     private Staff quiter;
@@ -28,8 +27,8 @@ public class WorkDispatcher
 
     private void initMapper()
     {
-        taskMapper.put(LIST_BOOK, deliverer);
-        taskMapper.put(QUIT, quiter);
+        taskMapper.put(LIST_BOOK_COMMAND, deliverer);
+        taskMapper.put(QUIT_COMMAND, quiter);
     }
 
     public Staff dispatchTask(String input)

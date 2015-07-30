@@ -11,8 +11,8 @@ import org.testng.annotations.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import static com.twu.biblioteca.staff.WorkDispatcher.LIST_BOOK;
-import static com.twu.biblioteca.staff.WorkDispatcher.QUIT;
+import static com.twu.biblioteca.staff.WorkDispatcher.LIST_BOOK_COMMAND;
+import static com.twu.biblioteca.staff.WorkDispatcher.QUIT_COMMAND;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -45,7 +45,7 @@ public class LibrarianTest
     {
         //given
         String[] args = new String[1];
-        InputStream inputStream = new ByteArrayInputStream(QUIT.getBytes());
+        InputStream inputStream = new ByteArrayInputStream(QUIT_COMMAND.getBytes());
         System.setIn(inputStream);
 
         //when
@@ -61,7 +61,7 @@ public class LibrarianTest
     {
         //given
         String[] args = new String[1];
-        InputStream inputStream = new ByteArrayInputStream(LIST_BOOK.getBytes());
+        InputStream inputStream = new ByteArrayInputStream(LIST_BOOK_COMMAND.getBytes());
         System.setIn(inputStream);
 
         //when

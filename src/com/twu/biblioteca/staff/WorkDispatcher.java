@@ -10,21 +10,25 @@ public class WorkDispatcher
 {
     public static final String LIST_BOOK_COMMAND = "list";
     public static final String QUIT_COMMAND = "quit";
+    public static final String BORROW_COMMAND = "checkout";
+
+    private Map<String, Staff> taskMapper = Maps.newHashMap();
 
     private Staff deliverer;
     private Staff quiter;
     private Staff emptyStaff;
-
-    private Map<String, Staff> taskMapper = Maps.newHashMap();
+    private Staff borrower;
 
     @Inject
     public WorkDispatcher(@Named("Deliverer") Staff deliverer,
                           @Named("Quiter") Staff quiter,
-                          @Named("EmptyStaff") Staff emptyStaff)
+                          @Named("EmptyStaff") Staff emptyStaff,
+                          @Named("Borrower") Staff borrower)
     {
         this.deliverer = deliverer;
         this.quiter = quiter;
         this.emptyStaff = emptyStaff;
+        this.borrower = borrower;
         initMapper();
     }
 
@@ -32,6 +36,7 @@ public class WorkDispatcher
     {
         taskMapper.put(LIST_BOOK_COMMAND, deliverer);
         taskMapper.put(QUIT_COMMAND, quiter);
+        taskMapper.put(BORROW_COMMAND, borrower);
     }
 
     public Staff dispatchTask(String input)

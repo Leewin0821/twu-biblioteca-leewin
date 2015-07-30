@@ -7,8 +7,8 @@ public class Book
     private final String bookName;
     private final String author;
     private final Date publishedYear;
-    private boolean isAvailableForBorrow;
-    private boolean isAvailableForReturn;
+    private boolean isAvailableForBorrow = true;
+    private boolean isAvailableForReturn = false;
 
     public Book(String bookName, String author, Date publishedYear)
     {

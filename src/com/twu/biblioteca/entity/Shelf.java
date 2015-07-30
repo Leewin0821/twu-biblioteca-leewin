@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+import com.google.inject.Singleton;
 
+@Singleton
 public class Shelf
 {
     private final List<Book> bookList;
@@ -23,5 +25,14 @@ public class Shelf
     public List<Book> getBookList()
     {
         return bookList;
+    }
+
+    public void borrowOutBook(String bookName)
+    {
+        for (Book book : bookList) {
+            if (book.getBookName().equals(bookName) && book.isAvailableForBorrow()) {
+                book.setIsAvailableForBorrow(false);
+            }
+        }
     }
 }

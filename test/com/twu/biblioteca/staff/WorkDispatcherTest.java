@@ -1,9 +1,11 @@
 package com.twu.biblioteca.staff;
 
+import static com.twu.biblioteca.staff.WorkDispatcher.*;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import org.junit.Ignore;
 import org.mockito.Mock;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -24,17 +26,15 @@ public class WorkDispatcherTest
         Staff deliverer = new Deliverer(shelf);
         Staff quiter = new Quiter();
         Staff emptyStaff = new EmptyStaff();
-        workDispatcher = new WorkDispatcher(deliverer, quiter, emptyStaff);
+        Staff borrower = new Borrower(shelf);
+        workDispatcher = new WorkDispatcher(deliverer, quiter, emptyStaff, borrower);
     }
 
     @Test
     public void should_return_deliverer_when_input_list()
     {
-        //given
-        String input_command = "list";
-
         //when
-        Staff result = workDispatcher.dispatchTask(input_command);
+        Staff result = workDispatcher.dispatchTask(LIST_BOOK_COMMAND);
 
         //then
         assertThat(result, instanceOf(Deliverer.class));
@@ -43,11 +43,8 @@ public class WorkDispatcherTest
     @Test
     public void should_return_quiter_when_input_quit()
     {
-        //given
-        String input_command = "quit";
-
         //when
-        Staff result = workDispatcher.dispatchTask(input_command);
+        Staff result = workDispatcher.dispatchTask(QUIT_COMMAND);
 
         //then
         assertThat(result, instanceOf(Quiter.class));
@@ -57,13 +54,22 @@ public class WorkDispatcherTest
     public void should_return_empty_staff_when_input_invalid()
     {
         //given
-        String input_command = "abc";
+        String invalid_command = "abc";
 
         //when
-        Staff result = workDispatcher.dispatchTask(input_command);
+        Staff result = workDispatcher.dispatchTask(invalid_command);
 
         //then
         assertThat(result, instanceOf(EmptyStaff.class));
+    }
 
+    @Test
+    public void should_return_borrower_when_input_checkout()
+    {
+        //when
+        Staff result = workDispatcher.dispatchTask(BORROW_COMMAND);
+
+        //then
+        assertThat(result, instanceOf(Borrower.class));
     }
 }

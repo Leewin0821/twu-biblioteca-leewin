@@ -5,6 +5,7 @@ import com.twu.biblioteca.staff.Messenger;
 import com.twu.biblioteca.staff.Staff;
 import com.twu.biblioteca.staff.WorkDispatcher;
 import org.mockito.Mock;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -48,11 +49,17 @@ public class LibrarianTest
         librarian = new Librarian(messenger, dispatcher);
     }
 
+    @AfterMethod
+    public void tearDown()
+    {
+        System.setIn(System.in);
+    }
+
     @Test
     public void should_show_welcome_message_when_start_application()
     {
         //given
-        String[] args = new String[1];
+
         InputStream inputStream = new ByteArrayInputStream(QUIT_COMMAND.getBytes());
         System.setIn(inputStream);
 
@@ -61,14 +68,12 @@ public class LibrarianTest
 
         //then
         verify(messenger, times(1)).doService();
-        System.setIn(System.in);
     }
 
     @Test
     public void should_list_books_when_user_input_list()
     {
         //given
-        String[] args = new String[1];
         InputStream inputStream = new ByteArrayInputStream(LIST_BOOK_COMMAND.getBytes());
         System.setIn(inputStream);
 
@@ -77,14 +82,12 @@ public class LibrarianTest
 
         //then
         verify(deliverer, times(1)).doService();
-        System.setIn(System.in);
     }
 
     @Test
     public void should_show_invalid_option_message_when_input_wrong_command()
     {
         //given
-        String[] args = new String[1];
         String invalid_command = "abc";
         InputStream inputStream = new ByteArrayInputStream(invalid_command.getBytes());
         System.setIn(inputStream);
@@ -94,14 +97,12 @@ public class LibrarianTest
 
         //then
         verify(emptyStaff, times(1)).doService();
-        System.setIn(System.in);
     }
 
     @Test
     public void shoud_borrow_book_when_input_checkout()
     {
         //given
-        String[] args = new String[1];
         InputStream inputStream = new ByteArrayInputStream(BORROW_COMMAND.getBytes());
         System.setIn(inputStream);
 
@@ -110,14 +111,12 @@ public class LibrarianTest
 
         //then
         verify(borrower, times(1)).doService();
-        System.setIn(System.in);
     }
 
     @Test
     public void shoud_return_book_when_input_return()
     {
         //given
-        String[] args = new String[1];
         InputStream inputStream = new ByteArrayInputStream(RETURN_COMMAND.getBytes());
         System.setIn(inputStream);
 
@@ -126,6 +125,5 @@ public class LibrarianTest
 
         //then
         verify(returner, times(1)).doService();
-        System.setIn(System.in);
     }
 }

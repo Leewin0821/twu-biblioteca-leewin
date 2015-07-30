@@ -32,11 +32,14 @@ public class LibrarianTest
     @Mock
     private Staff quiter;
 
+    @Mock
+    private Staff emptyStaff;
+
     @BeforeMethod
     public void setUp()
     {
         initMocks(this);
-        dispatcher = new WorkDispatcher(deliverer, quiter);
+        dispatcher = new WorkDispatcher(deliverer, quiter, emptyStaff);
         librarian = new Librarian(messenger, dispatcher);
     }
 
@@ -69,6 +72,23 @@ public class LibrarianTest
 
         //then
         verify(deliverer, times(1)).doService();
+        System.setIn(System.in);
+    }
+
+    @Test
+    public void should_show_invalid_option_message_when_input_wrong_command()
+    {
+        //given
+        String[] args = new String[1];
+        String invalid_command = "abc";
+        InputStream inputStream = new ByteArrayInputStream(invalid_command.getBytes());
+        System.setIn(inputStream);
+
+        //when
+        librarian.work();
+
+        //then
+        verify(emptyStaff, times(1)).doService();
         System.setIn(System.in);
     }
 }

@@ -6,9 +6,9 @@ public class Messenger implements Staff
     {
         System.out.println("*************************************");
         System.out.println("Welcome to Bangalore Public Library!");
-        System.out.println("Please input following commands to navigate:");
-        System.out.println("- list : List all books");
-        System.out.println("- quit : Quit application");
+        System.out.println("              Main Menu             ");
+        System.out.println("Please input 'list' to List Books");
+        System.out.println("Please input 'quit' to Quit App");
         System.out.println("*************************************");
         return true;
     }

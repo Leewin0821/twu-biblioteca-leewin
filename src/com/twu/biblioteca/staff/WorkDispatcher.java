@@ -13,15 +13,18 @@ public class WorkDispatcher
 
     private Staff deliverer;
     private Staff quiter;
+    private Staff emptyStaff;
 
     private Map<String, Staff> taskMapper = Maps.newHashMap();
 
     @Inject
     public WorkDispatcher(@Named("Deliverer") Staff deliverer,
-                          @Named("Quiter") Staff quiter)
+                          @Named("Quiter") Staff quiter,
+                          @Named("EmptyStaff") Staff emptyStaff)
     {
         this.deliverer = deliverer;
         this.quiter = quiter;
+        this.emptyStaff = emptyStaff;
         initMapper();
     }
 
@@ -33,6 +36,11 @@ public class WorkDispatcher
 
     public Staff dispatchTask(String input)
     {
-        return taskMapper.get(input);
+        Staff staff = taskMapper.get(input);
+        if (staff == null) {
+            return emptyStaff;
+        } else {
+            return staff;
+        }
     }
 }

@@ -10,6 +10,7 @@ public class Messenger implements Staff
         System.out.println("Please input 'list' to List Books");
         System.out.println("Please input 'quit' to Quit App");
         System.out.println("Please input 'checkout' to Borrow Book");
+        System.out.println("Please input 'return' to Return Book");
         System.out.println("*************************************");
         return true;
     }

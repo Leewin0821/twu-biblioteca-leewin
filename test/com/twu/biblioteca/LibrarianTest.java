@@ -41,11 +41,16 @@ public class LibrarianTest
     @Mock
     private Staff returner;
 
+    @Mock
+    private Staff movier;
+
     @BeforeMethod
     public void setUp()
     {
         initMocks(this);
-        WorkDispatcher dispatcher = new WorkDispatcher(deliverer, quiter, emptyStaff, borrower, returner);
+        WorkDispatcher dispatcher = new WorkDispatcher(
+                deliverer, quiter, emptyStaff, borrower, returner, movier
+        );
         librarian = new Librarian(messenger, dispatcher);
     }
 

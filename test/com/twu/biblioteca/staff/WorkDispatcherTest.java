@@ -27,11 +27,14 @@ public class WorkDispatcherTest
         Staff emptyStaff = new EmptyStaff();
         Staff borrower = new Borrower(shelf);
         Staff returner = new Returner(shelf);
-        workDispatcher = new WorkDispatcher(deliverer, quiter, emptyStaff, borrower, returner);
+        Staff movier = new Movier();
+        workDispatcher = new WorkDispatcher(
+                deliverer, quiter, emptyStaff, borrower, returner, movier
+        );
     }
 
     @Test
-    public void should_return_deliverer_when_input_list()
+    public void should_return_deliverer_when_input_list_book()
     {
         //when
         Staff result = workDispatcher.dispatchTask(LIST_BOOK_COMMAND);
@@ -81,6 +84,17 @@ public class WorkDispatcherTest
 
         //then
         assertThat(result, instanceOf(Returner.class));
+
+    }
+
+    @Test
+    public void shoud_return_movier_when_input_list_movie()
+    {
+        //when
+        Staff result = workDispatcher.dispatchTask(LIST_MOVIE_COMMAND);
+
+        //then
+        assertThat(result, instanceOf(Movier.class));
 
     }
 }

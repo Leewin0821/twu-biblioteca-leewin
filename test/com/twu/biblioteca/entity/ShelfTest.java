@@ -86,4 +86,63 @@ public class ShelfTest
         //then
         assertEquals(expectedMessage, outContent.toString());
     }
+
+    @Test
+    public void should_print_correct_message_when_borrow_movie_with_valid_name()
+    {
+        //given
+        String movieName = "Movie One";
+        String expectedMessage = "Thank you! Enjoy the movie.\n";
+
+        //when
+        shelf.borrowOutMovie(movieName);
+
+        //then
+        assertEquals(expectedMessage, outContent.toString());
+    }
+
+    @Test
+    public void should_print_warning_message_when_borrow_movie_with_invalid_name()
+    {
+        //given
+        String movieName = "abc";
+        String expectedMessage = "That movie is not available.\n";
+
+        //when
+        shelf.borrowOutMovie(movieName);
+
+        //then
+        assertEquals(expectedMessage, outContent.toString());
+    }
+
+    @Test
+    public void should_print_correct_message_when_return_movie_with_valid_name()
+    {
+        //given
+        String movieName = "Movie One";
+        String expectedMessage = "Thank you for returning the movie.\n";
+
+        //when
+        shelf.borrowOutMovie(movieName);
+        outContent = new ByteOutputStream();
+        System.setOut(new PrintStream(outContent));
+        shelf.returnMovie(movieName);
+
+        //then
+        assertEquals(expectedMessage, outContent.toString());
+    }
+
+    @Test
+    public void should_print_warning_message_when_return_movie_with_invalid_name()
+    {
+        //given
+        String movieName = "abc";
+        String expectedMessage = "That is not a valid movie to return.\n";
+
+        //when
+        shelf.returnMovie(movieName);
+
+        //then
+        assertEquals(expectedMessage, outContent.toString());
+    }
 }

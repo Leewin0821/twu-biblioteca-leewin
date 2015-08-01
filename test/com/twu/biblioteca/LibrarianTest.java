@@ -76,7 +76,7 @@ public class LibrarianTest
     }
 
     @Test
-    public void should_list_books_when_user_input_list()
+    public void should_list_books_when_user_input_list_book()
     {
         //given
         InputStream inputStream = new ByteArrayInputStream(LIST_BOOK_COMMAND.getBytes());
@@ -130,5 +130,19 @@ public class LibrarianTest
 
         //then
         verify(returner, times(1)).doService();
+    }
+
+    @Test
+    public void should_list_movie_when_inpu_list_movie()
+    {
+        //given
+        InputStream inputStream = new ByteArrayInputStream(LIST_MOVIE_COMMAND.getBytes());
+        System.setIn(inputStream);
+
+        //when
+        librarian.work();
+
+        //then
+        verify(movier, times(1)).doService();
     }
 }

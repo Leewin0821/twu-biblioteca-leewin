@@ -27,7 +27,7 @@ public class WorkDispatcherTest
         Staff emptyStaff = new EmptyStaff();
         Staff borrower = new Borrower(shelf);
         Staff returner = new Returner(shelf);
-        Staff movier = new Movier();
+        Staff movier = new Movier(shelf);
         workDispatcher = new WorkDispatcher(
                 deliverer, quiter, emptyStaff, borrower, returner, movier
         );
@@ -95,6 +95,5 @@ public class WorkDispatcherTest
 
         //then
         assertThat(result, instanceOf(Movier.class));
-
     }
 }

@@ -10,8 +10,25 @@ import com.google.inject.Singleton;
 public class Shelf
 {
     private List<Book> bookList;
+    private List<Movie> movieList;
 
     public Shelf()
+    {
+        initializeBooks();
+        initializeMovies();
+    }
+
+    private void initializeMovies()
+    {
+        movieList = Lists.newArrayList(
+                new Movie("Movie One", new Date(1981), "One", Rating.EIGHT),
+                new Movie("Movie Two", new Date(1982), "Two", Rating.NINE),
+                new Movie("Movie Three", new Date(1983), "Three", Rating.FIVE),
+                new Movie("Movie Four", new Date(1984), "Four", Rating.UNRATED)
+        );
+    }
+
+    private void initializeBooks()
     {
         bookList = Lists.newArrayList(
                 new Book("Book One", "AAA", new Date(19800808)),
@@ -60,6 +77,47 @@ public class Shelf
             filterBook.setIsAvailableForBorrow(true);
             filterBook.setIsAvailableForReturn(false);
             System.out.println("Thank you for returning the book.");
+        }
+    }
+
+    public List<Movie> getMovieList()
+    {
+        return movieList;
+    }
+
+    public void borrowOutMovie(String movieName)
+    {
+        List<Movie> filterMovieList = Lists.newArrayList();
+        for (Movie movie : movieList) {
+            if (movie.getName().equals(movieName) && movie.isAvailableForBorrow()) {
+                filterMovieList.add(movie);
+            }
+        }
+        if (filterMovieList.size() == 0) {
+            System.out.println("That movie is not available.");
+        } else {
+            Movie filterMovie = filterMovieList.get(0);
+            filterMovie.setIsAvailableForBorrow(false);
+            filterMovie.setIsAvailableForReturn(true);
+            System.out.println("Thank you! Enjoy the movie.");
+        }
+    }
+
+    public void returnMovie(String movieName)
+    {
+        List<Movie> filterMovieList = Lists.newArrayList();
+        for (Movie movie : movieList) {
+            if (movie.getName().equals(movieName) && movie.isAvailableForReturn()) {
+                filterMovieList.add(movie);
+            }
+        }
+        if (filterMovieList.size() == 0) {
+            System.out.println("That is not a valid movie to return.");
+        } else {
+            Movie filterMovie = filterMovieList.get(0);
+            filterMovie.setIsAvailableForBorrow(true);
+            filterMovie.setIsAvailableForReturn(false);
+            System.out.println("Thank you for returning the movie.");
         }
     }
 }

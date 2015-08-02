@@ -22,14 +22,15 @@ public class WorkDispatcherTest
     public void setUp() throws Exception
     {
         initMocks(this);
-        Staff deliverer = new Deliverer(shelf);
+        Staff bookLister = new BookLister(shelf);
         Staff quiter = new Quiter();
         Staff emptyStaff = new EmptyStaff();
-        Staff borrower = new Borrower(shelf);
+        Staff borrower = new BookBorrower(shelf);
         Staff returner = new Returner(shelf);
-        Staff movier = new Movier(shelf);
+        Staff movieLister = new MovieLister(shelf);
+        Staff movieBorrower = new MovieBorrower(shelf);
         workDispatcher = new WorkDispatcher(
-                deliverer, quiter, emptyStaff, borrower, returner, movier
+                bookLister, quiter, emptyStaff, borrower, returner, movieLister, movieBorrower
         );
     }
 
@@ -40,7 +41,7 @@ public class WorkDispatcherTest
         Staff result = workDispatcher.dispatchTask(LIST_BOOK_COMMAND);
 
         //then
-        assertThat(result, instanceOf(Deliverer.class));
+        assertThat(result, instanceOf(BookLister.class));
     }
 
     @Test
@@ -67,17 +68,17 @@ public class WorkDispatcherTest
     }
 
     @Test
-    public void should_return_borrower_when_input_checkout()
+    public void should_return_book_borrower_when_input_checkout_book()
     {
         //when
-        Staff result = workDispatcher.dispatchTask(BORROW_COMMAND);
+        Staff result = workDispatcher.dispatchTask(BORROW_BOOK_COMMAND);
 
         //then
-        assertThat(result, instanceOf(Borrower.class));
+        assertThat(result, instanceOf(BookBorrower.class));
     }
 
     @Test
-    public void should_return_returner_when_input_borrow()
+    public void should_return_returner_when_input_return()
     {
         //when
         Staff result = workDispatcher.dispatchTask(RETURN_COMMAND);
@@ -88,12 +89,22 @@ public class WorkDispatcherTest
     }
 
     @Test
-    public void shoud_return_movier_when_input_list_movie()
+    public void should_return_movieLister_when_input_list_movie()
     {
         //when
         Staff result = workDispatcher.dispatchTask(LIST_MOVIE_COMMAND);
 
         //then
-        assertThat(result, instanceOf(Movier.class));
+        assertThat(result, instanceOf(MovieLister.class));
+    }
+
+    @Test
+    public void should_return_movie_borrower_when_input_checkout_movie()
+    {
+        //when
+        Staff result = workDispatcher.dispatchTask(BORROW_MOVIE_COMMAND);
+
+        //then
+        assertThat(result, instanceOf(MovieBorrower.class));
     }
 }

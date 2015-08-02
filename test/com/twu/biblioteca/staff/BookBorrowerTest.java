@@ -8,19 +8,19 @@ import java.io.ByteArrayInputStream;
 import static org.mockito.Mockito.*;
 import static org.testng.AssertJUnit.assertTrue;
 
-public class BorrowerTest
+public class BookBorrowerTest
 {
     @Test
-    public void should_borrow_when_called()
+    public void should_borrow_book_when_called()
     {
         //given
         String bookName = "awesome";
         Shelf shelf = mock(Shelf.class);
-        Borrower borrower = new Borrower(shelf);
+        BookBorrower bookBorrower = new BookBorrower(shelf);
         System.setIn(new ByteArrayInputStream(bookName.getBytes()));
 
         //when
-        boolean result = borrower.doService();
+        boolean result = bookBorrower.doService();
 
         //then
         assertTrue(result);

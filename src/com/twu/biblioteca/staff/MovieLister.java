@@ -7,12 +7,12 @@ import com.google.inject.Inject;
 import com.twu.biblioteca.entity.Movie;
 import com.twu.biblioteca.entity.Shelf;
 
-public class Movier implements Staff
+public class MovieLister implements Staff
 {
     private Shelf shelf;
 
     @Inject
-    public Movier(Shelf shelf)
+    public MovieLister(Shelf shelf)
     {
         this.shelf = shelf;
     }

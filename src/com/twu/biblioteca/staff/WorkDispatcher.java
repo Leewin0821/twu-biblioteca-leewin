@@ -10,43 +10,48 @@ public class WorkDispatcher
 {
     public static final String LIST_BOOK_COMMAND = "list book";
     public static final String QUIT_COMMAND = "quit";
-    public static final String BORROW_COMMAND = "checkout";
+    public static final String BORROW_BOOK_COMMAND = "checkout book";
     public static final String RETURN_COMMAND = "return";
     public static final String LIST_MOVIE_COMMAND = "list movie";
+    public static final String BORROW_MOVIE_COMMAND = "checkout movie";
 
     private Map<String, Staff> taskMapper = Maps.newHashMap();
 
-    private Staff deliverer;
+    private Staff bookLister;
     private Staff quiter;
     private Staff emptyStaff;
     private Staff borrower;
     private Staff returner;
-    private Staff movier;
+    private Staff movieLister;
+    private Staff movieBorrower;
 
     @Inject
-    public WorkDispatcher(@Named("Deliverer") Staff deliverer,
+    public WorkDispatcher(@Named("BookLister") Staff bookLister,
                           @Named("Quiter") Staff quiter,
                           @Named("EmptyStaff") Staff emptyStaff,
                           @Named("Borrower") Staff borrower,
                           @Named("Returner") Staff returner,
-                          @Named("Movier") Staff movier)
+                          @Named("MovieLister") Staff movieLister,
+                          @Named("MovieBorrower") Staff movieBorrower)
     {
-        this.deliverer = deliverer;
+        this.bookLister = bookLister;
         this.quiter = quiter;
         this.emptyStaff = emptyStaff;
         this.borrower = borrower;
         this.returner = returner;
-        this.movier = movier;
+        this.movieLister = movieLister;
+        this.movieBorrower = movieBorrower;
         initMapper();
     }
 
     private void initMapper()
     {
-        taskMapper.put(LIST_BOOK_COMMAND, deliverer);
+        taskMapper.put(LIST_BOOK_COMMAND, bookLister);
         taskMapper.put(QUIT_COMMAND, quiter);
-        taskMapper.put(BORROW_COMMAND, borrower);
+        taskMapper.put(BORROW_BOOK_COMMAND, borrower);
         taskMapper.put(RETURN_COMMAND, returner);
-        taskMapper.put(LIST_MOVIE_COMMAND, movier);
+        taskMapper.put(LIST_MOVIE_COMMAND, movieLister);
+        taskMapper.put(BORROW_MOVIE_COMMAND, movieBorrower);
     }
 
     public Staff dispatchTask(String input)

@@ -1,7 +1,5 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.staff.Deliverer;
-import com.twu.biblioteca.staff.Messenger;
 import com.twu.biblioteca.staff.Staff;
 import com.twu.biblioteca.staff.WorkDispatcher;
 import org.mockito.Mock;
@@ -24,10 +22,10 @@ public class LibrarianTest
     private Librarian librarian;
 
     @Mock
-    private Messenger messenger;
+    private Staff messenger;
 
     @Mock
-    private Deliverer deliverer;
+    private Staff bookLister;
 
     @Mock
     private Staff quiter;
@@ -42,14 +40,17 @@ public class LibrarianTest
     private Staff returner;
 
     @Mock
-    private Staff movier;
+    private Staff movierLister;
+
+    @Mock
+    private Staff movieBorrower;
 
     @BeforeMethod
     public void setUp()
     {
         initMocks(this);
         WorkDispatcher dispatcher = new WorkDispatcher(
-                deliverer, quiter, emptyStaff, borrower, returner, movier
+                bookLister, quiter, emptyStaff, borrower, returner, movierLister, movieBorrower
         );
         librarian = new Librarian(messenger, dispatcher);
     }
@@ -86,7 +87,7 @@ public class LibrarianTest
         librarian.work();
 
         //then
-        verify(deliverer, times(1)).doService();
+        verify(bookLister, times(1)).doService();
     }
 
     @Test
@@ -108,7 +109,7 @@ public class LibrarianTest
     public void shoud_borrow_book_when_input_checkout()
     {
         //given
-        InputStream inputStream = new ByteArrayInputStream(BORROW_COMMAND.getBytes());
+        InputStream inputStream = new ByteArrayInputStream(BORROW_BOOK_COMMAND.getBytes());
         System.setIn(inputStream);
 
         //when
@@ -133,7 +134,7 @@ public class LibrarianTest
     }
 
     @Test
-    public void should_list_movie_when_inpu_list_movie()
+    public void should_list_movie_when_input_list_movie()
     {
         //given
         InputStream inputStream = new ByteArrayInputStream(LIST_MOVIE_COMMAND.getBytes());
@@ -143,6 +144,6 @@ public class LibrarianTest
         librarian.work();
 
         //then
-        verify(movier, times(1)).doService();
+        verify(movierLister, times(1)).doService();
     }
 }

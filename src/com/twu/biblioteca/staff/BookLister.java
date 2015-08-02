@@ -7,12 +7,12 @@ import com.google.inject.Inject;
 import com.twu.biblioteca.entity.Book;
 import com.twu.biblioteca.entity.Shelf;
 
-public class Deliverer implements Staff
+public class BookLister implements Staff
 {
     private Shelf shelf;
 
     @Inject
-    public Deliverer(Shelf shelf)
+    public BookLister(Shelf shelf)
     {
         this.shelf = shelf;
     }

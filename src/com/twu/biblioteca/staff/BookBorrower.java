@@ -5,12 +5,12 @@ import java.util.Scanner;
 import com.google.inject.Inject;
 import com.twu.biblioteca.entity.Shelf;
 
-public class Borrower implements Staff
+public class BookBorrower implements Staff
 {
     private Shelf shelf;
 
     @Inject
-    public Borrower(Shelf shelf)
+    public BookBorrower(Shelf shelf)
     {
         this.shelf = shelf;
     }

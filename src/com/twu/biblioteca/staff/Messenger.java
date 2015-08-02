@@ -13,6 +13,7 @@ public class Messenger implements Staff
         System.out.println("Please input 'checkout book' to Borrow Book");
         System.out.println("Please input 'checkout movie' to Borrow Movie");
         System.out.println("Please input 'return' to Return Book");
+        System.out.println("Please input 'user information' to Display User Information");
         System.out.println("*************************************");
         return true;
     }

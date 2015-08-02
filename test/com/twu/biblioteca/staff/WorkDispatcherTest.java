@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+import com.twu.biblioteca.entity.UserDB;
 import org.mockito.Mock;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -29,8 +30,10 @@ public class WorkDispatcherTest
         Staff returner = new Returner(shelf);
         Staff movieLister = new MovieLister(shelf);
         Staff movieBorrower = new MovieBorrower(shelf);
+        UserDB userDB = new UserDB();
+        Staff userNotifier = new UserNotifier(userDB);
         workDispatcher = new WorkDispatcher(
-                bookLister, quiter, emptyStaff, borrower, returner, movieLister, movieBorrower
+                bookLister, quiter, emptyStaff, borrower, returner, movieLister, movieBorrower, userNotifier
         );
     }
 
@@ -106,5 +109,15 @@ public class WorkDispatcherTest
 
         //then
         assertThat(result, instanceOf(MovieBorrower.class));
+    }
+
+    @Test
+    public void should_return_user_notifier_when_input_user_information()
+    {
+        //when
+        Staff result = workDispatcher.dispatchTask(USER_INFORMATION_COMMAND);
+
+        //then
+        assertThat(result, instanceOf(UserNotifier.class));
     }
 }

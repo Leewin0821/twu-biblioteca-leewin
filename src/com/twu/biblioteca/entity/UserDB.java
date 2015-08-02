@@ -1,6 +1,7 @@
 package com.twu.biblioteca.entity;
 
 import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -12,6 +13,7 @@ import java.util.List;
 public class UserDB
 {
     private List<User> userList;
+    public String currentAccount;
 
     public UserDB()
     {
@@ -20,6 +22,7 @@ public class UserDB
 
     private void initializeAccounts()
     {
+        currentAccount = "";
         userList = Lists.newArrayList(
                 new User("123-4567", "password", "Alice", "alice@gmail.com", "012-8888"),
                 new User("111-1111", "password", "Bob", "bob@gmail.com", "012-7777"),
@@ -30,6 +33,7 @@ public class UserDB
 
     public boolean validateAccount(final String account, final String password)
     {
+        currentAccount = account;
         ImmutableList<User> users = FluentIterable.from(userList).filter(new Predicate<User>()
         {
             public boolean apply(User user)
@@ -39,5 +43,16 @@ public class UserDB
         }).toList();
 
         return users.size() == 1;
+    }
+
+    public User findUserByAccount(final String account)
+    {
+        return Collections2.filter(userList, new Predicate<User>()
+        {
+            public boolean apply(User user)
+            {
+                return user.getLibraryNum().equals(account);
+            }
+        }).iterator().next();
     }
 }

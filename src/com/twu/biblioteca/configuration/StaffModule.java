@@ -17,5 +17,6 @@ public class StaffModule implements Module
         binder.bind(Staff.class).annotatedWith(Names.named("Returner")).to(Returner.class);
         binder.bind(Staff.class).annotatedWith(Names.named("MovieLister")).to(MovieLister.class);
         binder.bind(Staff.class).annotatedWith(Names.named("MovieBorrower")).to(MovieBorrower.class);
+        binder.bind(Staff.class).annotatedWith(Names.named("UserNotifier")).to(UserNotifier.class);
     }
 }

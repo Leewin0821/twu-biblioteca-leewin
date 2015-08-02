@@ -41,4 +41,12 @@ public class User
     {
         return phone;
     }
+
+    @Override
+    public String toString()
+    {
+        return name + " | "
+              + email + " | "
+              + phone;
+    }
 }

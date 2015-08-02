@@ -14,6 +14,7 @@ public class WorkDispatcher
     public static final String RETURN_COMMAND = "return";
     public static final String LIST_MOVIE_COMMAND = "list movie";
     public static final String BORROW_MOVIE_COMMAND = "checkout movie";
+    public static final String USER_INFORMATION_COMMAND = "user information";
 
     private Map<String, Staff> taskMapper = Maps.newHashMap();
 
@@ -24,6 +25,7 @@ public class WorkDispatcher
     private Staff returner;
     private Staff movieLister;
     private Staff movieBorrower;
+    private Staff userNotifier;
 
     @Inject
     public WorkDispatcher(@Named("BookLister") Staff bookLister,
@@ -32,7 +34,8 @@ public class WorkDispatcher
                           @Named("Borrower") Staff borrower,
                           @Named("Returner") Staff returner,
                           @Named("MovieLister") Staff movieLister,
-                          @Named("MovieBorrower") Staff movieBorrower)
+                          @Named("MovieBorrower") Staff movieBorrower,
+                          @Named("UserNotifier") Staff userNotifier)
     {
         this.bookLister = bookLister;
         this.quiter = quiter;
@@ -41,6 +44,7 @@ public class WorkDispatcher
         this.returner = returner;
         this.movieLister = movieLister;
         this.movieBorrower = movieBorrower;
+        this.userNotifier = userNotifier;
         initMapper();
     }
 
@@ -52,6 +56,7 @@ public class WorkDispatcher
         taskMapper.put(RETURN_COMMAND, returner);
         taskMapper.put(LIST_MOVIE_COMMAND, movieLister);
         taskMapper.put(BORROW_MOVIE_COMMAND, movieBorrower);
+        taskMapper.put(USER_INFORMATION_COMMAND, userNotifier);
     }
 
     public Staff dispatchTask(String input)

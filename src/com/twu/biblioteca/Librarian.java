@@ -9,22 +9,29 @@ import java.util.Scanner;
 public class Librarian
 {
     private Staff messenger;
+    private Staff guard;
     private WorkDispatcher dispatcher;
 
     @Inject
-    public Librarian(Staff messenger, WorkDispatcher dispatcher)
+    public Librarian(Staff messenger, Staff guard, WorkDispatcher dispatcher)
     {
         this.messenger = messenger;
+        this.guard = guard;
         this.dispatcher = dispatcher;
     }
 
     public void work()
     {
+        System.out.println("Please input your library number and password, separated by space: ");
+        if (!guard.doService()) {
+            System.out.println("Sorry, invalid user.");
+            System.exit(0);
+        }
         messenger.doService();
-        doSomething();
+        assignTasks();
     }
 
-    private void doSomething()
+    private void assignTasks()
     {
         boolean condition = true;
         while (condition) {

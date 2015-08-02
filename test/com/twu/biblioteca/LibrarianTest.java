@@ -45,6 +45,9 @@ public class LibrarianTest
     @Mock
     private Staff movieBorrower;
 
+    @Mock
+    private Staff guard;
+
     @BeforeMethod
     public void setUp()
     {
@@ -52,7 +55,7 @@ public class LibrarianTest
         WorkDispatcher dispatcher = new WorkDispatcher(
                 bookLister, quiter, emptyStaff, borrower, returner, movierLister, movieBorrower
         );
-        librarian = new Librarian(messenger, dispatcher);
+        librarian = new Librarian(messenger, guard, dispatcher);
     }
 
     @AfterMethod
@@ -65,7 +68,6 @@ public class LibrarianTest
     public void should_show_welcome_message_when_start_application()
     {
         //given
-
         InputStream inputStream = new ByteArrayInputStream(QUIT_COMMAND.getBytes());
         System.setIn(inputStream);
 
@@ -74,6 +76,20 @@ public class LibrarianTest
 
         //then
         verify(messenger, times(1)).doService();
+    }
+
+    @Test
+    public void should_call_guard_service_when_start_application()
+    {
+        //given
+        InputStream inputStream = new ByteArrayInputStream(QUIT_COMMAND.getBytes());
+        System.setIn(inputStream);
+
+        //when
+        librarian.work();
+
+        //then
+        verify(guard, times(1)).doService();
     }
 
     @Test
@@ -120,7 +136,7 @@ public class LibrarianTest
     }
 
     @Test
-    public void shoud_return_book_when_input_return()
+    public void should_return_book_when_input_return()
     {
         //given
         InputStream inputStream = new ByteArrayInputStream(RETURN_COMMAND.getBytes());
